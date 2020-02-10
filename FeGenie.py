@@ -612,13 +612,8 @@ for FeCategory in HMMdirLS:
 
                         # print("performing HMMSEARCH")
                         os.system(
-                            "hmmsearch --cpu %d -T %d --tblout %s/%s-HMM/%s.tblout -o %s/%s-HMM/%s.txt %s/%s %s/%s-proteins.faa"
-                            % (int(args.t), float(bit), binDir, i, hmm, binDir, i, hmm, hmmDir, hmm, binDir, i)
-                        )
-
-                        # REMOVING THE STANDARD OUTPUT FILE
-                        os.system(
-                            "rm " + binDir + "/" + i + "-HMM/" + hmm + ".txt"
+                            "hmmsearch --cpu %d -T %d --tblout %s/%s-HMM/%s.tblout -o /dev/null %s/%s %s/%s-proteins.faa"
+                            % (int(args.t), float(bit), binDir, i, hmm, hmmDir, hmm, binDir, i)
                         )
 
                         # READING IN THE HMMSEARCH RESULTS (TBLOUT) OUT FILE
@@ -791,9 +786,8 @@ print("Looking for Thermincola S-layer cytochromes and Geobacter porin-cytochrom
 for i in binDirLS:
     if lastItem(i.split(".")) == args.bin_ext:
         os.system(
-            "makeblastdb -dbtype prot -in %s/%s-proteins.faa -out %s/%s-proteins.faa -logfile %s/makedbfile.txt" % (
-            binDir, i, binDir, i, binDir))
-        os.system("rm %s/makedbfile.txt" % binDir)
+            "makeblastdb -dbtype prot -in %s/%s-proteins.faa -out %s/%s-proteins.faa -logfile /dev/null" % (
+            binDir, i, binDir, i))
 
         os.system(
             "blastp -query %s -db %s/%s-proteins.faa -num_threads %s -outfmt 6 -out %s/%s-thermincola.blast -evalue 1E-10"
