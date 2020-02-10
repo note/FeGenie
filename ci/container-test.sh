@@ -13,7 +13,7 @@ mkdir -p ci/actual_output
 find ci/fegenie_out -iname "fegenie*.tiff" -exec mv {} ci/actual_output/ \;
 find ci/fegenie_out -iname "fegenie*.csv" -exec mv {} ci/actual_output/ \;
 
-
+# TODO: Actually we expect 2 files but right now dendro-heatmap.R fails
 EXPECTED_NUMBER_OF_TIFFS=1
 NUMBER_OF_TIFFS=`find . -type f | sed 's/.*\.//' | sort | uniq -c | grep tiff | awk '{print $1}'`
 
