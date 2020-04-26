@@ -1,0 +1,20 @@
+language: bash
+
+# Step before_install copy-pasted from https://gist.github.com/zshaheen/fe76d1507839ed6fbfbccef6b9c13ed9
+before_install:
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+  - chmod +x miniconda.sh
+  - ./miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+
+install:
+  - ./setup.sh
+
+script:
+  - source $(conda info --root)/etc/profile.d/conda.sh # as advised in https://stackoverflow.com/a/55347299/429311
+  - conda activate fegenie
+  - conda env list # for debugging
+  - ./ci/test.sh
